@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#0b0d0c">
+  <meta name="description" content="Crie orçamentos de serviços de forma simples, organizada e profissional com o VendePronto.">
+  <title>VendePronto — Orçamentos sem complicação</title>
+  <style>
+    :root {
+      --bg: #0b0d0c;
+      --panel: #121714;
+      --panel2: #171e19;
+      --green: #8df5a6;
+      --green2: #4bd879;
+      --text: #f5f7f5;
+      --muted: #a6b2a9;
+      --line: rgba(255,255,255,.10);
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0; background:
+        radial-gradient(ellipse at 80% 0%, rgba(75,216,121,.13), transparent 36%),
+        radial-gradient(ellipse at 0% 35%, rgba(141,245,166,.07), transparent 30%),
+        var(--bg);
+      color: var(--text); font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      line-height: 1.55;
+    }
+    a { color: inherit; text-decoration: none; }
+    .wrap { width: min(1120px, calc(100% - 40px)); margin: auto; }
+    header { padding: 22px 0; border-bottom: 1px solid var(--line); }
+    .nav { display: flex; justify-content: space-between; align-items: center; gap: 18px; }
+    .brand { display: flex; align-items: center; gap: 11px; font-size: 1.15rem; font-weight: 850; letter-spacing: -.04em; }
+    .logo { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; color: #06110a; background: var(--green); font-weight: 950; box-shadow: 0 0 28px rgba(141,245,166,.15); }
+    .navlinks { display: flex; align-items: center; gap: 24px; color: var(--muted); font-size: .92rem; }
+    .navlinks a:hover, .textlink:hover { color: var(--green); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 13px 19px; border-radius: 12px; border: 1px solid transparent; background: var(--green); color: #07110a; font-weight: 850; font-size: .94rem; transition: transform .18s ease, background .18s ease; }
+    .btn:hover { transform: translateY(-2px); background: #b0ffc0; }
+    .btn.secondary { color: var(--text); background: rgba(255,255,255,.04); border-color: var(--line); }
+    .btn.secondary:hover { background: rgba(255,255,255,.08); }
+    .hero { padding: 82px 0 66px; display: grid; grid-template-columns: 1.05fr .95fr; gap: 52px; align-items: center; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; color: var(--green); font-size: .78rem; font-weight: 850; letter-spacing: .12em; text-transform: uppercase; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--green); box-shadow: 0 0 12px var(--green); }
+    h1 { margin: 17px 0 20px; font-size: clamp(2.7rem, 6vw, 4.8rem); line-height: .99; letter-spacing: -.065em; max-width: 680px; }
+    h1 span { color: var(--green); }
+    .lead { color: var(--muted); font-size: 1.1rem; max-width: 560px; margin: 0 0 27px; }
+    .actions { display: flex; flex-wrap: wrap; gap: 12px; }
+    .micro { margin-top: 17px; color: #829087; font-size: .82rem; }
+    .preview { border: 1px solid rgba(141,245,166,.23); background: linear-gradient(145deg, rgba(25,35,28,.98), rgba(14,18,15,.98)); border-radius: 24px; padding: 22px; box-shadow: 0 30px 90px rgba(0,0,0,.35), 0 0 50px rgba(75,216,121,.06); transform: rotate(1deg); }
+    .preview-top { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding-bottom: 17px; margin-bottom: 18px; }
+    .preview-title { font-weight: 850; letter-spacing: -.03em; }
+    .status { color: var(--green); background: rgba(141,245,166,.1); border: 1px solid rgba(141,245,166,.2); border-radius: 99px; padding: 5px 9px; font-size: .72rem; font-weight: 800; }
+    .fake-label { color: var(--muted); font-size: .72rem; margin-bottom: 5px; }
+    .fake-input { padding: 11px 12px; border: 1px solid var(--line); border-radius: 9px; color: #e9eee9; background: rgba(255,255,255,.025); font-size: .86rem; }
+    .fake-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+    .line-item { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; border-bottom: 1px solid var(--line); padding: 13px 0; font-size: .87rem; }
+    .line-item small { display: block; color: var(--muted); margin-top: 3px; }
+    .line-item strong { font-variant-numeric: tabular-nums; }
+    .total { display: flex; justify-content: space-between; align-items: end; padding-top: 18px; }
+    .total small { color: var(--muted); }
+    .amount { color: var(--green); font-weight: 900; font-size: 1.8rem; letter-spacing: -.04em; }
+    .feature-strip { display: grid; grid-template-columns: repeat(3,1fr); gap: 14px; padding-bottom: 70px; }
+    .strip-item { border: 1px solid var(--line); border-radius: 15px; padding: 17px; background: rgba(255,255,255,.025); color: #dce5de; font-size: .9rem; }
+    .strip-item b { display: block; margin-bottom: 3px; }
+    .strip-item span { color: var(--muted); font-size: .83rem; }
+    section { padding: 64px 0; }
+    .section-head { max-width: 650px; margin-bottom: 28px; }
+    .section-head h2 { font-size: clamp(1.9rem, 4vw, 3rem); line-height: 1.08; letter-spacing: -.05em; margin: 12px 0; }
+    .section-head p { color: var(--muted); margin: 0; }
+    .cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+    .card { border: 1px solid var(--line); background: rgba(255,255,255,.025); border-radius: 18px; padding: 23px; }
+    .icon { width: 43px; height: 43px; display: grid; place-items: center; border-radius: 13px; color: var(--green); background: rgba(141,245,166,.09); border: 1px solid rgba(141,245,166,.15); font-size: 1.2rem; }
+    .card h3 { margin: 17px 0 8px; letter-spacing: -.025em; }
+    .card p { color: var(--muted); font-size: .92rem; margin: 0; }
+    .steps { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; counter-reset: steps; }
+    .step { border-top: 1px solid rgba(141,245,166,.4); padding: 19px 4px 0; }
+    .step-num { color: var(--green); font-size: .8rem; font-weight: 900; letter-spacing: .12em; }
+    .step h3 { margin: 9px 0 5px; }
+    .step p { color: var(--muted); font-size: .9rem; margin: 0; }
+    .cta { padding: 38px; border: 1px solid rgba(141,245,166,.22); background: linear-gradient(120deg, rgba(141,245,166,.10), rgba(255,255,255,.025)); border-radius: 24px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .cta h2 { margin: 0 0 8px; font-size: clamp(1.7rem, 4vw, 2.4rem); line-height: 1.1; letter-spacing: -.05em; }
+    .cta p { margin: 0; color: var(--muted); }
+    footer { margin-top: 70px; padding: 26px 0 35px; border-top: 1px solid var(--line); color: #829087; font-size: .82rem; }
+    .footer-row { display: flex; justify-content: space-between; align-items: center; gap: 18px; flex-wrap: wrap; }
+    .social { display: flex; gap: 16px; }
+    .social a { color: #c6d0c8; }
+    .social a:hover { color: var(--green); }
+    .notice { font-size: .8rem; color: #829087; margin-top: 14px; }
+    @media (max-width: 820px) {
+      .hero { grid-template-columns: 1fr; padding-top: 56px; gap: 38px; }
+      .preview { transform: none; }
+      .cards, .steps { grid-template-columns: 1fr; }
+      .feature-strip { grid-template-columns: 1fr; padding-bottom: 25px; }
+      .cta { align-items: flex-start; flex-direction: column; padding: 27px; }
+      .navlinks { gap: 13px; }
+    }
+    @media (max-width: 560px) {
+      .wrap { width: min(100% - 28px, 1120px); }
+      header { padding: 15px 0; }
+      .navlinks a:not(.btn) { display: none; }
+      .navlinks .btn { padding: 10px 12px; font-size: .82rem; }
+      .hero { padding-top: 46px; }
+      h1 { font-size: clamp(2.7rem, 14vw, 4rem); }
+      .lead { font-size: 1rem; }
+      .fake-grid { grid-template-columns: 1fr; }
+      .preview { padding: 17px; }
+      section { padding: 48px 0; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap nav">
+      <a class="brand" href="#" aria-label="VendePronto início">
+        <span class="logo">V</span><span>VendePronto</span>
+      </a>
+      <nav class="navlinks" aria-label="Navegação principal">
+        <a href="#recursos">Recursos</a>
+        <a href="#como-funciona">Como funciona</a>
+        <a class="btn" href="demonstracao.html">Testar demonstração ↗</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <div class="wrap">
+      <section class="hero">
+        <div>
+          <div class="eyebrow"><span class="dot"></span> Mais organização para o seu serviço</div>
+          <h1>Orçamentos profissionais. <span>Sem complicação.</span></h1>
+          <p class="lead">Organize serviços, calcule valores e prepare uma mensagem para o cliente em poucos passos. O VendePronto foi pensado para quem trabalha por conta própria e quer apresentar seus orçamentos com mais clareza.</p>
+          <div class="actions">
+            <a class="btn" href="demonstracao.html">Experimentar grátis <span aria-hidden="true">→</span></a>
+            <a class="btn secondary" href="#como-funciona">Conhecer a ferramenta</a>
+          </div>
+          <p class="micro">Demonstração inicial • Sem criar conta • Abra no navegador</p>
+        </div>
+
+        <div class="preview" aria-label="Prévia ilustrativa de um orçamento">
+          <div class="preview-top">
+            <div>
+              <div class="fake-label">PRÉVIA DO PRODUTO</div>
+              <div class="preview-title">Orçamento de serviço</div>
+            </div>
+            <span class="status">● Organizado</span>
+          </div>
+          <div class="fake-grid">
+            <div><div class="fake-label">PROFISSIONAL</div><div class="fake-input">Seu negócio</div></div>
+            <div><div class="fake-label">CLIENTE</div><div class="fake-input">Nome do cliente</div></div>
+          </div>
+          <div class="line-item"><div>Instalação e montagem<small>1 serviço</small></div><strong>R$ 180,00</strong></div>
+          <div class="line-item"><div>Materiais e ajustes<small>2 itens</small></div><strong>R$ 95,00</strong></div>
+          <div class="total"><div><small>VALOR TOTAL</small><div>Orçamento demonstrativo</div></div><div class="amount">R$ 275,00</div></div>
+        </div>
+      </section>
+
+      <div class="feature-strip">
+        <div class="strip-item"><b>✦ Cálculos automáticos</b><span>Veja o subtotal, desconto e total.</span></div>
+        <div class="strip-item"><b>✦ Apresentação organizada</b><span>Reúna os dados em um só lugar.</span></div>
+        <div class="strip-item"><b>✦ Pronto para compartilhar</b><span>Prepare a mensagem e imprima ou salve em PDF.</span></div>
+      </div>
+
+      <section id="recursos">
+        <div class="section-head">
+          <div class="eyebrow">Feito para simplificar</div>
+          <h2>Menos tempo organizando. Mais clareza para o cliente.</h2>
+          <p>Uma ferramenta direta para profissionais autônomos e pequenos prestadores de serviço que precisam montar orçamentos sem depender de planilhas complicadas.</p>
+        </div>
+        <div class="cards">
+          <article class="card">
+            <div class="icon">＋</div>
+            <h3>Adicione seus serviços</h3>
+            <p>Inclua descrições, quantidades e preços para montar o orçamento de acordo com o trabalho.</p>
+          </article>
+          <article class="card">
+            <div class="icon">＝</div>
+            <h3>Confira os valores</h3>
+            <p>Veja os cálculos e aplique um desconto quando necessário, com o total atualizado automaticamente.</p>
+          </article>
+          <article class="card">
+            <div class="icon">↗</div>
+            <h3>Prepare o envio</h3>
+            <p>Gere uma visualização para imprimir ou salvar em PDF e prepare o texto para compartilhar no WhatsApp.</p>
+          </article>
+        </div>
+      </section>
+
+      <section id="como-funciona">
+        <div class="section-head">
+          <div class="eyebrow">Comece em poucos passos</div>
+          <h2>Simples de entender. Fácil de experimentar.</h2>
+        </div>
+        <div class="steps">
+          <div class="step"><div class="step-num">PASSO 01</div><h3>Preencha os dados</h3><p>Informe o negócio e os dados do cliente que vão aparecer no orçamento.</p></div>
+          <div class="step"><div class="step-num">PASSO 02</div><h3>Adicione os itens</h3><p>Descreva os serviços, ajuste quantidades e preços e confira o total.</p></div>
+          <div class="step"><div class="step-num">PASSO 03</div><h3>Revise e compartilhe</h3><p>Confira a prévia antes de imprimir, salvar em PDF ou preparar a mensagem.</p></div>
+        </div>
+      </section>
+
+      <section>
+        <div class="cta">
+          <div>
+            <h2>Veja como funciona na prática.</h2>
+            <p>Abra a demonstração e teste os recursos com dados fictícios.</p>
+          </div>
+          <a class="btn" href="demonstracao.html">Abrir demonstração gratuita →</a>
+        </div>
+        <p class="notice">Esta é uma versão demonstrativa em desenvolvimento. Confira os recursos disponíveis antes de usar em situações reais. Não insira dados pessoais ou informações confidenciais na demonstração.</p>
+      </section>
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap footer-row">
+      <div>© <span id="year"></span> VendePronto • Feito para simplificar seus orçamentos.</div>
+      <div class="social">
+        <!-- Troque os links abaixo pelos perfis oficiais depois de criar as contas. -->
+        <a href="https://www.instagram.com/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/" target="_blank" rel="noopener noreferrer">TikTok</a>
+      </div>
+    </div>
+  </footer>
+  <script>document.getElementById('year').textContent = new Date().getFullYear();</script>
+</body>
+</html>
